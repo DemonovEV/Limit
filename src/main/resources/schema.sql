@@ -1,3 +1,7 @@
+--create schema if not exists "limit" ;
+
+--set currentSchema="limit";
+
 drop table if exists common_limits;
 
 CREATE TABLE if not exists common_limits
