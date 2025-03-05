@@ -14,6 +14,11 @@ public class LimitsApplication {
         var ctx=SpringApplication.run(LimitsApplication.class, args);
         var rep=ctx.getBean(CommonLimitRepository.class);
         System.out.println(rep);
+
+        rep.findAll()
+                .forEach(System.out::println);
+
+
     }
 
 }

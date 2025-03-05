@@ -1,4 +1,4 @@
---create schema if not exists "limit" ;
+create schema if not exists "limits" ;
 
 --set currentSchema="limit";
 
