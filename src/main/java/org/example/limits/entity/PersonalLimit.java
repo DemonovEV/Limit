@@ -4,10 +4,10 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Table("common_limits")
-public class CommonLimit {
+@Table("personal_limits")
+public class PersonalLimit {
 
-    String clientType;
+    String inn;
     LocalDateTime dateBegin;
     LocalDateTime dateEnd;
     float Amount;
