@@ -6,7 +6,6 @@ drop table if exists common_limits;
 
 CREATE TABLE if not exists common_limits
 (
-    id                SERIAL PRIMARY KEY,
     client_type   VARCHAR(30)  NOT NULL,
     date_begin    TIMESTAMP   NOT NULL,
     date_end    TIMESTAMP,
