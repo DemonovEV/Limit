@@ -37,6 +37,20 @@ public class LimitsApplication {
                 );
 
         utils.save(obj);
+        obj = new LimitUtilization("111111111",
+                UUID.randomUUID(),
+                LocalDateTime.now(),
+                100,
+                "EUR",
+                80,
+                true
+
+        );
+
+        utils.save(obj.withId(null));
+        utils.save(obj.withId(null));
+        utils.save(obj.withId(null));
+
     }
 
 }

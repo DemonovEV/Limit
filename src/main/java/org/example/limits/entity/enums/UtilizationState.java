@@ -8,7 +8,7 @@ public enum UtilizationState {
     CANCELED(-1);
 
     @Getter
-    int state;
+    private int state;
 
     UtilizationState(int state) {
         this.state = state;

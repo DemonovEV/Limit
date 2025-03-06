@@ -37,9 +37,9 @@ create table if not exists limit_utilization
     currency           varchar(3)  not null,
     utilization_amount numeric     not null,
     income             boolean     not null
-    ,state              int         not null
+    ,state              varchar         not null CHECK (state in ('HOLD','PROCESSED','CANCELED'))
 
-);
+    );
 
 COMMENT ON COLUMN limit_utilization.state IS '0:hold,1:procesed,-1:canceled';
 
