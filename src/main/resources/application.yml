@@ -1,12 +1,11 @@
-
 spring:
-  application:
-    name: LimitsInit
+
   sql:
-      init:
-          mode: always
+    init:
+      mode: always
+      data-locations: data-*.sql
   datasource:
-        url: jdbc:postgresql://localhost:5436/gele_main?currentSchema=limits
-        username: gele_usr
-        password: gele_usr
+    url: jdbc:postgresql://localhost:5436/gele_main?currentSchema=limits
+    username: gele_usr
+    password: gele_usr
 
