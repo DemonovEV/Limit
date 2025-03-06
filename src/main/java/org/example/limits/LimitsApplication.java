@@ -6,6 +6,9 @@ import org.example.limits.repository.LimitUtilizationRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @SpringBootApplication
 public class LimitsApplication {
 
@@ -21,9 +24,19 @@ public class LimitsApplication {
         var utils = ctx.getBean(LimitUtilizationRepository.class);
 
         System.out.println(utils);
+       // @org.springframework.data.convert.ValueConverter(org.springframework.data.convert.PropertyValueConverter.ObjectToObjectPropertyValueConverter.class)org.example.limits.entity.enums.UtilizationState
+     //   org.example.limits.entity.LimitUtilization.state
+        LimitUtilization obj = new LimitUtilization("111111111",
+                UUID.randomUUID(),
+                LocalDateTime.now(),
+                100,
+                "EUR",
+                80,
+                true
 
-        var o = new LimitUtilization
+                );
 
+        utils.save(obj);
     }
 
 }

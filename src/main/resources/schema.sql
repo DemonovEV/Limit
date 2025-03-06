@@ -36,8 +36,8 @@ create table if not exists limit_utilization
     doc_amount         numeric     not null,
     currency           varchar(3)  not null,
     utilization_amount numeric     not null,
-    income             boolean     not null,
-    state              int
+    income             boolean     not null
+    ,state              int         not null
 
 );
 

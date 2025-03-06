@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Table("common_limits")
 public class CommonLimit {
 
-    String clientType;
-    LocalDateTime dateBegin;
-    LocalDateTime dateEnd;
-    float Amount;
+    private String clientType;
+    private LocalDateTime dateBegin;
+    private LocalDateTime dateEnd;
+    private float Amount;
 }

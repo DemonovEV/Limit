@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 @Table("personal_limits")
 public class PersonalLimit {
 
-    String inn;
-    LocalDateTime dateBegin;
-    LocalDateTime dateEnd;
-    float Amount;
+    private String inn;
+    private LocalDateTime dateBegin;
+    private LocalDateTime dateEnd;
+    private float Amount;
 }
