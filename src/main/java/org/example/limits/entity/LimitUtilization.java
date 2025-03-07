@@ -20,7 +20,7 @@ public class LimitUtilization {
     @Id
     @With private Long id;
 
-    private final String inn;
+    private final String clientID;
     private final UUID doc_id;
     private final LocalDateTime date_hold;
     private final float doc_amount;
