@@ -2,10 +2,11 @@ create schema if not exists "limits";
 
 --set currentSchema="limit";
 drop table if exists limit_to_utilization;
-drop table if exists client_limits;
-drop table if exists common_limits;
-
 drop table if exists utilization;
+
+drop table if exists client_limits;
+
+drop table if exists common_limits;
 
 
 ----------
@@ -31,7 +32,7 @@ CREATE TABLE if not exists client_limits
     amount            numeric           not null,
     used              numeric default 0 not null,
     hold              numeric default 0 not null,
-    common_limits_ref int               NOT NULL REFERENCES common_limits (id)
+    common_limit_ref int                REFERENCES common_limits (id)
 );
 
 ------------------
@@ -54,14 +55,4 @@ create table if not exists utilization
 COMMENT ON COLUMN utilization.state IS '0:hold,1:procesed,-1:canceled';
 
 -----------------------
-
-
-create table if not exists limit_to_utilization
-(
-    client_limit_ref  int     NOT NULL REFERENCES client_limits (id),
-    utilization_ref   int     NOT NULL REFERENCES utilization (id),
-    amount            numeric not null,
-    utilization_order bigint  NOT NULL /* defaut taco_key*/
-);
-
 

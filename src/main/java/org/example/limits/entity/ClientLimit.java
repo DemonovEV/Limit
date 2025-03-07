@@ -1,20 +1,38 @@
 package org.example.limits.entity;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
 @Table("client_limits")
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class ClientLimit {
     @Id
-    private Long id;
+    Long id;
 
-    private String clientID;
-    private LocalDateTime dateBegin;
-    private LocalDateTime dateEnd;
-    private float Amount;
+    @NonNull
+    String clientID;
+    @Builder.Default
+    @NonNull
+    LocalDateTime dateBegin = LocalDateTime.now();
+    LocalDateTime dateEnd;
+    @NonNull
+    float Amount;
 
-    private CommonLimit commonLimit;
+    @Builder.Default
+    float used = 0;
+    @Builder.Default
+    float hold = 0;
 
+    @MappedCollection(idColumn ="CommonLimit",keyColumn = "id")
+    CommonLimit commonLimit;
 }
