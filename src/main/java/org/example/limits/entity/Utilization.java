@@ -3,7 +3,6 @@ package org.example.limits.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.With;
 import org.example.limits.entity.enums.UtilizationState;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -16,9 +15,9 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class LimitUtilization {
+public class Utilization {
     @Id
-    @With private Long id;
+    private Long id;
 
     private final String clientID;
     private final UUID doc_id;

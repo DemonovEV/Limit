@@ -1,6 +1,6 @@
 package org.example.limits;
 
-import org.example.limits.entity.LimitUtilization;
+import org.example.limits.entity.Utilization;
 import org.example.limits.repository.CommonLimitRepository;
 import org.example.limits.repository.LimitUtilizationRepository;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ public class LimitsApplication {
     public static void main(String[] args) {
         var ctx = SpringApplication.run(LimitsApplication.class, args);
         var rep = ctx.getBean(CommonLimitRepository.class);
-        System.out.println(rep);
+      /*  System.out.println(rep);
 
         rep.findAll()
                 .forEach(System.out::println);
@@ -26,7 +26,7 @@ public class LimitsApplication {
         System.out.println(utils);
        // @org.springframework.data.convert.ValueConverter(org.springframework.data.convert.PropertyValueConverter.ObjectToObjectPropertyValueConverter.class)org.example.limits.entity.enums.UtilizationState
      //   org.example.limits.entity.LimitUtilization.state
-        LimitUtilization obj = new LimitUtilization("111111111",
+        Utilization obj = new Utilization("111111111",
                 UUID.randomUUID(),
                 LocalDateTime.now(),
                 100,
@@ -37,7 +37,7 @@ public class LimitsApplication {
                 );
 
         utils.save(obj);
-        obj = new LimitUtilization("111111111",
+        obj = new Utilization("111111111",
                 UUID.randomUUID(),
                 LocalDateTime.now(),
                 100,
@@ -47,10 +47,12 @@ public class LimitsApplication {
 
         );
 
+        *//*utils.save(obj.withId(null));
         utils.save(obj.withId(null));
         utils.save(obj.withId(null));
-        utils.save(obj.withId(null));
+*//*
 
+        */
     }
 
 }

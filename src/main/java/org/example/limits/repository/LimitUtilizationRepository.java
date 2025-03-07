@@ -1,7 +1,7 @@
 package org.example.limits.repository;
 
-import org.example.limits.entity.LimitUtilization;
+import org.example.limits.entity.Utilization;
 import org.springframework.data.repository.CrudRepository;
 
-public interface LimitUtilizationRepository extends CrudRepository<LimitUtilization, Integer> {
+public interface LimitUtilizationRepository extends CrudRepository<Utilization, Integer> {
 }
