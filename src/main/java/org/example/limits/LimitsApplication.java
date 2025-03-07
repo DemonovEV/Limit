@@ -26,17 +26,18 @@ public class LimitsApplication {
 
         commonLimit.getClientLimit().add(clientLimit);
 
-        var commonLimit1 = clientLimit.withId(null);
-        commonLimit.getClientLimit().add(commonLimit1);
+        var clientLimit1 = clientLimit.withId(null);
+        commonLimit.getClientLimit().add(clientLimit1.withAmount(54654));
 
-        var commonLimit2 = clientLimit.withId(null).withAmount(1);
-        commonLimit.getClientLimit().add(commonLimit2);
+        var clientLimit2 = clientLimit.withId(null).withAmount(1);
+        commonLimit.getClientLimit().add(clientLimit2);
 
         var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
         var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
 
 
         commonLimitRepository.save(commonLimit);
+        commonLimit.getClientLimit().add(clientLimit2.withId(null).withClientID("aadasd"));
         commonLimitRepository.save(commonLimit);/*
 s.setAmount(111111);
         commonLimit.setAmount(2222222);
