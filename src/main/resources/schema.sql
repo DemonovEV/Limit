@@ -33,8 +33,9 @@ CREATE TABLE if not exists client_limits
     used              numeric default 0 not null,
     hold              numeric default 0 not null,
     common_limit_ref int                REFERENCES common_limits (id)
+,   common_limit_order INTEGER
 );
-
+--COMMENT ON COLUMN utilization.state IS 'В DATA-JPA ';
 ------------------
 
 
@@ -56,3 +57,16 @@ COMMENT ON COLUMN utilization.state IS '0:hold,1:procesed,-1:canceled';
 
 -----------------------
 
+
+ALTER SEQUENCE client_limits_id_seq
+    START 15
+    RESTART 15;
+
+
+ALTER SEQUENCE common_limits_id_seq
+    START 50
+    RESTART 50;
+
+ALTER SEQUENCE utilization_id_seq
+    START 110
+    restart 110;

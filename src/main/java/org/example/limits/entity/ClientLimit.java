@@ -1,12 +1,8 @@
 package org.example.limits.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -14,10 +10,16 @@ import java.time.LocalDateTime;
 @Table("client_limits")
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
+@Builder(toBuilder = true)
+@With
 public class ClientLimit {
+   private   Long getIdFortoBuilder() {
+        return null;
+    };
+
     @Id
-    Long id;
+    @Builder.ObtainVia(method = "getIdFortoBuilder")
+    @With Long id;
 
     @NonNull
     String clientID;
@@ -33,6 +35,7 @@ public class ClientLimit {
     @Builder.Default
     float hold = 0;
 
-    @MappedCollection(idColumn ="CommonLimit",keyColumn = "id")
-    CommonLimit commonLimit;
+    // @Column("common_limit_ref")
+    /// @MappedCollection(idColumn ="id123",keyColumn = "common_limit_ref123")
+
 }

@@ -13,31 +13,38 @@ public class LimitsApplication {
 
     public static void main(String[] args) {
         var ctx = SpringApplication.run(LimitsApplication.class, args);
+        var clientLimit = ClientLimit.builder()
+                .clientID("100500")
+                // .commonLimit(commonLimit)
+                .build();
 
         var commonLimit = CommonLimit.builder()
                 .clientType("REQ")
                 .Amount(5000)
+                //  .clientLimit(new S<>())
                 .build();
 
-        var rep = ctx.getBean(CommonLimitRepository.class);
+        commonLimit.getClientLimit().add(clientLimit);
 
-       //  rep.save(commonLimit);
-        //   rep.delete(commonLimit);
-        // commonLimit.setAmount(55555);
-        //commonLimit.setId(null);
-        //   rep.save(commonLimit);
+        var commonLimit1 = clientLimit.withId(null);
+        commonLimit.getClientLimit().add(commonLimit1);
 
-        var rep_cl_lim = ctx.getBean(ClientLimitRepository.class);
-        var clientLimit = ClientLimit.builder()
-                .clientID("100500")
-                .commonLimit(commonLimit)
-                .build();
-        rep_cl_lim.save(
-                clientLimit
+        var commonLimit2 = clientLimit.withId(null).withAmount(1);
+        commonLimit.getClientLimit().add(commonLimit2);
 
-        );
+        var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
+        var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
 
 
+        commonLimitRepository.save(commonLimit);
+        commonLimitRepository.save(commonLimit);/*
+s.setAmount(111111);
+        commonLimit.setAmount(2222222);
+        commonLimit.getClientLimit().clear();
+        commonLimit.getClientLimit().add(s);
+        commonLimit.getClientLimit().add(s2);
+        commonLimitRepository.save(commonLimit);
+*/
 
     }
 
