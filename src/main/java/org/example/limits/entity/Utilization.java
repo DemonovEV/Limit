@@ -16,9 +16,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class Utilization {
-    @Id
-    private Long id;
-
     private final String clientID;
     private final UUID doc_id;
     private final LocalDateTime date_hold;
@@ -27,6 +24,7 @@ public class Utilization {
     private final float utilization_amount;
     private final boolean income;
     LocalDateTime date_proc;
-
+    @Id
+    private Long id;
     private UtilizationState state = UtilizationState.HOLD;
 }

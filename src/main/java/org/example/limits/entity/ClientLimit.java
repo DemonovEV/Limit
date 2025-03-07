@@ -16,5 +16,5 @@ public class ClientLimit {
     private float Amount;
 
     private CommonLimit commonLimit;
-    
+
 }

@@ -8,7 +8,6 @@ drop table if exists common_limits;
 drop table if exists utilization;
 
 
-
 ----------
 
 CREATE TABLE if not exists common_limits
