@@ -14,24 +14,30 @@ public class LimitsApplication {
     public static void main(String[] args) {
         var ctx = SpringApplication.run(LimitsApplication.class, args);
 
-        var cl = CommonLimit.builder()
+        var commonLimit = CommonLimit.builder()
                 .clientType("REQ")
                 .Amount(5000)
                 .build();
 
         var rep = ctx.getBean(CommonLimitRepository.class);
 
-        rep.save(cl);
+       //  rep.save(commonLimit);
+        //   rep.delete(commonLimit);
+        // commonLimit.setAmount(55555);
+        //commonLimit.setId(null);
+        //   rep.save(commonLimit);
 
         var rep_cl_lim = ctx.getBean(ClientLimitRepository.class);
-
+        var clientLimit = ClientLimit.builder()
+                .clientID("100500")
+                .commonLimit(commonLimit)
+                .build();
         rep_cl_lim.save(
-                ClientLimit.builder()
-                        .clientID("100500")
-                        .commonLimit(cl)
-                        .build()
+                clientLimit
 
         );
+
+
 
     }
 

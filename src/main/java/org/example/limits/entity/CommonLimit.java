@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
-public class CommonLimit {
+public class CommonLimit
+      //  implements Persistable
+{
     @Id
     Long id;
 
@@ -26,4 +29,9 @@ public class CommonLimit {
     LocalDateTime dateEnd;
     @NonNull
     float Amount;
+/*
+    @Override
+    public boolean isNew() {
+        return true;
+    }*/
 }
