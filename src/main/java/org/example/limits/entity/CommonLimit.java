@@ -5,12 +5,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @Entity(name="common_limits")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
@@ -22,6 +24,7 @@ public class CommonLimit
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     Long id;
 
     @NonNull

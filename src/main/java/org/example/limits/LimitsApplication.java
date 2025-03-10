@@ -23,17 +23,20 @@ public class LimitsApplication {
              // .id(100L)
               .amount(12313)
               .clientId("asd")
-              .clientLimit(commonLimit)
+              .commonLimit(commonLimit)
               .build();
 
         var clientLimitRepository=ctx.getBean(ClientLimitRepository.class);
         var commonLimitRepository=ctx.getBean(CommonLimitRepository.class);
 
-      //  commonLimitRepository.save(commonLimit);
+        commonLimitRepository.save(commonLimit);
         clientLimitRepository.save(clientLimit);
         clientLimitRepository.save(clientLimit);
-    //    clientLimit.setId(null);
-    //    clientLimitRepository.save(clientLimit);
+       clientLimit.setId(null);
+        commonLimit.setAmount(66666);
+    clientLimit.setCommonLimit(commonLimit
+    );
+       clientLimitRepository.save(clientLimit);
 
     }
 
