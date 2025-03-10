@@ -29,14 +29,11 @@ public class LimitsApplication {
         var clientLimitRepository=ctx.getBean(ClientLimitRepository.class);
         var commonLimitRepository=ctx.getBean(CommonLimitRepository.class);
 
-        commonLimitRepository.save(commonLimit);
+      //  commonLimitRepository.save(commonLimit);
         clientLimitRepository.save(clientLimit);
+        commonLimit.setAmount(66666);
         clientLimitRepository.save(clientLimit);
        clientLimit.setId(null);
-        commonLimit.setAmount(66666);
-    clientLimit.setCommonLimit(commonLimit
-    );
-       clientLimitRepository.save(clientLimit);
 
     }
 

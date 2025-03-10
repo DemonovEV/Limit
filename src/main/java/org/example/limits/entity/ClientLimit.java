@@ -42,7 +42,7 @@ public class ClientLimit {
 
 
     //@ManyToOne(cascade = CascadeType.ALL)
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "common_limit_ref", referencedColumnName="id")
     CommonLimit commonLimit;
 }
