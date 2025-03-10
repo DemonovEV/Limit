@@ -13,48 +13,27 @@ public class LimitsApplication {
 
     public static void main(String[] args) {
         var ctx = SpringApplication.run(LimitsApplication.class, args);
-        var clientLimit = ClientLimit.builder()
-                .clientID("100500")
-                // .commonLimit(commonLimit)
-                .amount(100)
-                .build();
+        var commonLimit= CommonLimit.builder()
 
-        var commonLimit = CommonLimit.builder()
-                .clientType("REQ")
-                .amount(5000)
-                //  .clientLimit(new S<>())
+                .clientType("Asd")
                 .build();
 
 
-        commonLimit.getClientLimit().add(clientLimit);
+      var clientLimit= ClientLimit.builder()
+             // .id(100L)
+              .amount(12313)
+              .clientId("asd")
+              .clientLimit(commonLimit)
+              .build();
 
-        var clientLimit1 = clientLimit.withId(null).withAmount(101);
-        commonLimit.getClientLimit().add(clientLimit1);
+        var clientLimitRepository=ctx.getBean(ClientLimitRepository.class);
+        var commonLimitRepository=ctx.getBean(CommonLimitRepository.class);
 
-
-        var clientLimit2 = clientLimit1.withId(null).withAmount(100);
-        commonLimit.getClientLimit().add(clientLimit2);
-
-        System.out.println(clientLimit2);
-        System.out.println(clientLimit2.hashCode());
-
-        var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
-        var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
-
-        commonLimitRepository.save(commonLimit);
-       // commonLimit.getClientLimit().add(clientLimit2.withId(null).withClientID("aadasd"));
-        commonLimitRepository.save(commonLimit);
-
-       // commonLimitRepository.delete(commonLimit);
-
-        /*
-s.setAmount(111111);
-        commonLimit.setAmount(2222222);
-        commonLimit.getClientLimit().clear();
-        commonLimit.getClientLimit().add(s);
-        commonLimit.getClientLimit().add(s2);
-        commonLimitRepository.save(commonLimit);
-*/
+      //  commonLimitRepository.save(commonLimit);
+        clientLimitRepository.save(clientLimit);
+        clientLimitRepository.save(clientLimit);
+    //    clientLimit.setId(null);
+    //    clientLimitRepository.save(clientLimit);
 
     }
 

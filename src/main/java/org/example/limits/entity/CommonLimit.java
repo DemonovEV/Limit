@@ -1,26 +1,27 @@
 package org.example.limits.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table("common_limits")
-@Data
+@Entity(name="common_limits")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Builder
+//@With
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommonLimit
         //  implements Persistable
 {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @NonNull
@@ -31,15 +32,4 @@ public class CommonLimit
     LocalDateTime dateEnd;
     @NonNull
     float amount;
-/*
-    @Override
-    public boolean isNew() {
-        return true;
-    }*/
-
-    @MappedCollection(idColumn = "common_limit_ref"
-               , keyColumn = "common_limit_order"
-    )
-    @Builder.Default
-    List<ClientLimit> clientLimit = new ArrayList<>();
 }

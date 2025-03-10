@@ -33,7 +33,7 @@ CREATE TABLE if not exists client_limits
     used              numeric default 0 not null,
     hold              numeric default 0 not null,
     common_limit_ref int                REFERENCES common_limits (id)
-,   common_limit_order INTEGER
+--,   common_limit_order INTEGER
 );
 --COMMENT ON COLUMN utilization.state IS 'В DATA-JPA ';
 ------------------
