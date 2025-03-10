@@ -28,7 +28,7 @@ public class ClientLimit {
     LocalDateTime dateBegin = LocalDateTime.now();
     LocalDateTime dateEnd;
     @NonNull
-    float Amount;
+    float amount;
 
     @Builder.Default
     float used = 0;

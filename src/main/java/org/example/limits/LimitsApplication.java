@@ -16,29 +16,38 @@ public class LimitsApplication {
         var clientLimit = ClientLimit.builder()
                 .clientID("100500")
                 // .commonLimit(commonLimit)
+                .amount(100)
                 .build();
 
         var commonLimit = CommonLimit.builder()
                 .clientType("REQ")
-                .Amount(5000)
+                .amount(5000)
                 //  .clientLimit(new S<>())
                 .build();
 
+
         commonLimit.getClientLimit().add(clientLimit);
 
-        var clientLimit1 = clientLimit.withId(null);
-        commonLimit.getClientLimit().add(clientLimit1.withAmount(54654));
+        var clientLimit1 = clientLimit.withId(null).withAmount(101);
+        commonLimit.getClientLimit().add(clientLimit1);
 
-        var clientLimit2 = clientLimit.withId(null).withAmount(1);
+
+        var clientLimit2 = clientLimit1.withId(null).withAmount(100);
         commonLimit.getClientLimit().add(clientLimit2);
+
+        System.out.println(clientLimit2);
+        System.out.println(clientLimit2.hashCode());
 
         var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
         var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
 
-
         commonLimitRepository.save(commonLimit);
-        commonLimit.getClientLimit().add(clientLimit2.withId(null).withClientID("aadasd"));
-        commonLimitRepository.save(commonLimit);/*
+       // commonLimit.getClientLimit().add(clientLimit2.withId(null).withClientID("aadasd"));
+        commonLimitRepository.save(commonLimit);
+
+       // commonLimitRepository.delete(commonLimit);
+
+        /*
 s.setAmount(111111);
         commonLimit.setAmount(2222222);
         commonLimit.getClientLimit().clear();

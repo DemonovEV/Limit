@@ -11,9 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Table("common_limits")
 @Data
@@ -32,7 +30,7 @@ public class CommonLimit
     LocalDateTime dateBegin = LocalDateTime.now();
     LocalDateTime dateEnd;
     @NonNull
-    float Amount;
+    float amount;
 /*
     @Override
     public boolean isNew() {
