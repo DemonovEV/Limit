@@ -15,9 +15,8 @@ import java.util.List;
 @Data
 @Entity(name="common_limits")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
-//@With
-@NoArgsConstructor
+@Builder // TODO на время проектирования
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
 public class CommonLimit
         //  implements Persistable
@@ -25,14 +24,14 @@ public class CommonLimit
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    Long id;
+    final Long id;
 
     @NonNull
-    String clientType;
+    final String clientType;
     @Builder.Default
     @NonNull
-    LocalDateTime dateBegin = LocalDateTime.now();
+    final LocalDateTime dateBegin = LocalDateTime.now();
     LocalDateTime dateEnd;
     @NonNull
-    float amount;
+    final float amount;
 }

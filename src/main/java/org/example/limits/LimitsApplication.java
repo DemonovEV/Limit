@@ -13,27 +13,34 @@ public class LimitsApplication {
 
     public static void main(String[] args) {
         var ctx = SpringApplication.run(LimitsApplication.class, args);
-        var commonLimit= CommonLimit.builder()
 
-                .clientType("Asd")
+        var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
+        var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
+
+
+        var commonLimit = CommonLimit.builder()
+
+                .clientType("LIMIT1")
+                .amount(123456)
+                .build();
+        commonLimitRepository.save(commonLimit);
+
+        var clientLimit = ClientLimit.builder()
+                .amount(11111)
+                .clientId("OOO MAJAK")
+                .commonLimit(commonLimit)
                 .build();
 
 
-      var clientLimit= ClientLimit.builder()
-             // .id(100L)
-              .amount(12313)
-              .clientId("asd")
-              .commonLimit(commonLimit)
-              .build();
-
-        var clientLimitRepository=ctx.getBean(ClientLimitRepository.class);
-        var commonLimitRepository=ctx.getBean(CommonLimitRepository.class);
-
-      //  commonLimitRepository.save(commonLimit);
         clientLimitRepository.save(clientLimit);
-        commonLimit.setAmount(66666);
-        clientLimitRepository.save(clientLimit);
-       clientLimit.setId(null);
+        //  commonLimit.setAmount(66666);
+        clientLimitRepository.save(clientLimit
+                .toBuilder()
+                .id(null)
+                        .amount(222222)
+                .clientId("ROGAKOPITA")
+                .build());
+        // clientLimit.setId(null);
 
     }
 

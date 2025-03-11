@@ -9,27 +9,25 @@ import java.time.LocalDateTime;
 @Data
 @Entity(name = "client_limits")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Builder
-//@With
-@NoArgsConstructor
+@Builder(toBuilder = true) // TODO на время проектирования
+@NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-//@RequiredArgsConstructor
 public class ClientLimit {
     @Id
     //@GeneratedValue(generator = "client_limits_id_seq", strategy = GenerationType.SEQUENCE)
     //@SequenceGenerator(allocationSize = 1, name = "client_limits_id_seq")
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    final Long id;
 
     @NonNull
 
     String clientId;
     @Builder.Default
     @NonNull
-    LocalDateTime dateBegin = LocalDateTime.now();
+    final LocalDateTime dateBegin = LocalDateTime.now();
     LocalDateTime dateEnd;
     @NonNull
-    float amount;
+    final float amount;
 
     @Builder.Default
     float used = 0;
@@ -42,7 +40,7 @@ public class ClientLimit {
 
 
     //@ManyToOne(cascade = CascadeType.ALL)
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "common_limit_ref", referencedColumnName="id")
-    CommonLimit commonLimit;
+    final CommonLimit commonLimit;
 }

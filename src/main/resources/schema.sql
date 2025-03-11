@@ -69,8 +69,8 @@ create table if not exists limit_to_utilization
 (
     client_limit_ref  int     NOT NULL REFERENCES client_limits (id),
     utilization_ref   int     NOT NULL REFERENCES utilization (id),
-    amount            numeric not null,
-    utilization_order bigint  NOT NULL /* defaut taco_key*/
+    amount            numeric not null
+   -- ,utilization_order bigint  NOT NULL /* defaut taco_key*/
 );
 ---------
 
