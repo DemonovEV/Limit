@@ -62,22 +62,16 @@ create table if not exists utilization
 );
 
 COMMENT ON COLUMN utilization.state IS '0:hold,1:procesed,-1:canceled';
-
------------------------
+----------------------
 
 create table if not exists limit_to_utilization
 (
     client_limit_ref  int     NOT NULL REFERENCES client_limits (id),
-    utilization_ref   int     NOT NULL REFERENCES utilization (id),
-    amount            numeric not null
+    utilization_ref   int     NOT NULL REFERENCES utilization (id)
+--,    amount            numeric not null
    -- ,utilization_order bigint  NOT NULL /* defaut taco_key*/
 );
 ---------
-
-create table if not exists unfriendly_currencies
-(
-    value           varchar(3) not null   PRIMARY KEY
-);
 
 
 
