@@ -1,8 +1,9 @@
 package org.example.limits;
 
-import org.example.limits.entity.ClientLimit;
+import org.example.limits.entity.Limit;
 import org.example.limits.entity.CommonLimit;
-import org.example.limits.entity.Utilization;
+import org.example.limits.entity.UtilizationItem;
+import org.example.limits.entity.UtilizationDoc;
 import org.example.limits.entity.enums.UtilizationState;
 import org.example.limits.repository.ClientLimitRepository;
 import org.example.limits.repository.CommonLimitRepository;
@@ -24,89 +25,84 @@ public class LimitsApplication {
         var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
         var utilizationRepository = ctx.getBean(UtilizationRepository.class);
 
-
+        // INIT COMMON LIMIT
         var commonLimit = CommonLimit.builder()
-
                 .clientType("COMMON LIMIT 1")
                 .amount(1000)
                 .build();
         commonLimitRepository.save(commonLimit);
-//-----------------------------
-        var clientLimit1 = ClientLimit.builder()
-                .clientId("OOO MAJAK")
+// MAKE PERSONAL LIMIT FOR CLIENT
+        var clientPersonalLimit = Limit.builder()
+                .clientId("ORG 1" )
+                .amount(3000)
+                .dateBegin(LocalDateTime.now())
+                .dateEnd(LocalDateTime.now().plusDays(100))
+                .build();
+
+        clientLimitRepository.save(clientPersonalLimit);
+
+// COPY COMMON LIMIT FOR CLIENT
+        var clientCommonLimit = Limit.builder()
+                .clientId(clientPersonalLimit.getClientId())
                 .dateBegin(commonLimit.getDateBegin())
                 .dateEnd(commonLimit.getDateEnd())
                 .amount(commonLimit.getAmount())
+                .used(0)
                 .commonLimit(commonLimit)
                 .build();
-        clientLimitRepository.save(clientLimit1);
-
-        var clientLimit2 = ClientLimit.builder()
-                .clientId(clientLimit1.getClientId())
-                .amount(3000)
-                .dateBegin(LocalDateTime.now())
-                .dateEnd(LocalDateTime.now().plusDays(100))
-
-                .build();
-
-        clientLimitRepository.save(clientLimit2);
-
+        clientLimitRepository.save(clientCommonLimit);
+// Utilization 500
         var util1 =
-                Utilization.builder()
-                        //.id(1L)
+                UtilizationDoc.builder()
                         .doc_id(UUID.randomUUID())
                         .date_hold(LocalDateTime.now())
                         .income(true)
-                        .utilization_amount(100)
-                        .currency("USD")
-                        .doc_amount(100)
+                        .utilization_amount(500)
+                        .doc_amount(500)
+                        .date_proc(LocalDateTime.now())
                         .state(UtilizationState.PROCESSED)
                         .build();
-
-
-        util1.getClientLimitList().add(clientLimit1);
-        util1.getClientLimitList().add(clientLimit2);
+        // Добавляю детали утилизации
+        util1.getUtilizationItems().add(
+                UtilizationItem.builder()
+                        .limit(clientCommonLimit)
+                        .amount(util1.getUtilization_amount())
+                        .build());
+        // Корректирую USED
+        clientCommonLimit.setUsed(clientCommonLimit.getUsed()+util1.getUtilization_amount());
 
         utilizationRepository.save(util1);
+        clientLimitRepository.save(clientCommonLimit);
 
+// Utilization 800
         var util2 =
-                Utilization.builder()
-                        //.id(1L)
+                UtilizationDoc.builder()
                         .doc_id(UUID.randomUUID())
-                        .date_hold(LocalDateTime.now())
+                        .date_hold(LocalDateTime.now().plusHours(2))
                         .income(true)
-                        .utilization_amount(100)
-                        .currency("USD")
-                        .doc_amount(100)
+                        .utilization_amount(800)
+                        .doc_amount(800)
+                        .date_proc(LocalDateTime.now())
+                        .state(UtilizationState.PROCESSED)
                         .build();
-        util2.getClientLimitList().add(clientLimit1);
-        util2.getClientLimitList().add(clientLimit2);
+// Добавляю детали утилизации - сначала по общему лимиту
+        util2.getUtilizationItems().add(
+                UtilizationItem.builder()
+                        .limit(clientCommonLimit)
+                        .amount(500)
+                        .build());
+        clientCommonLimit.setUsed(clientCommonLimit.getUsed()+500);
 
-        var clientLimit3 = ClientLimit.builder()
-                .clientId(clientLimit1.getClientId())
-                .amount(3000)
-                .dateBegin(LocalDateTime.now())
-                .dateEnd(LocalDateTime.now().plusDays(100))
-                .commonLimit(commonLimit)
-                .build();
-
-
-        clientLimitRepository.save(clientLimit3);
-
-        util2.getClientLimitList().add(clientLimit3);
+        util2.getUtilizationItems().add(
+                UtilizationItem.builder()
+                        .limit(clientPersonalLimit)
+                        .amount(300)
+                        .build());
+        clientPersonalLimit.setUsed(clientPersonalLimit.getUsed()+ 300);
 
         utilizationRepository.save(util2);
-var utils=
-        utilizationRepository.findAll();
-
-        utils.forEach(
-                utilization ->
-                        utilization.getClientLimitList().forEach(
-                                System.out::println
-                        )
-        );
-
-        System.out.println(utils);
+        clientLimitRepository.save(clientCommonLimit);
+        clientLimitRepository.save(clientPersonalLimit);
 
     }
 

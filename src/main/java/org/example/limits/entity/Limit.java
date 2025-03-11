@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder(toBuilder = true) // TODO на время проектирования
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class ClientLimit {
+public class Limit {
     @Id
     //@GeneratedValue(generator = "client_limits_id_seq", strategy = GenerationType.SEQUENCE)
     //@SequenceGenerator(allocationSize = 1, name = "client_limits_id_seq")

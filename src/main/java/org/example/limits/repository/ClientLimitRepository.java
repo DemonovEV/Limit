@@ -1,8 +1,8 @@
 package org.example.limits.repository;
 
-import org.example.limits.entity.ClientLimit;
+import org.example.limits.entity.Limit;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ClientLimitRepository
-        extends CrudRepository<ClientLimit, Long> {
+        extends CrudRepository<Limit, Long> {
 }

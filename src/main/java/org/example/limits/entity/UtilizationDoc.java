@@ -12,13 +12,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Entity(name = "utilization")
+@Entity(name = "utilization_doc")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Builder // TODO на время проектирования
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-
-public class Utilization {
+public class UtilizationDoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -28,11 +27,14 @@ public class Utilization {
     @NonNull
     LocalDateTime date_hold;
     @NonNull
-    float doc_amount;
-    @NonNull
-    String currency;
-    @NonNull
     float utilization_amount;
+    @NonNull
+   // @Builder.Default
+    float doc_amount;// = utilization_amount;
+    @NonNull
+    @Builder.Default
+    String currency = "USD";
+
     @NonNull
     boolean income;
     @NonFinal
@@ -44,15 +46,10 @@ public class Utilization {
     UtilizationState state = UtilizationState.HOLD;
 
     @Builder.Default
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "limit_to_utilization",
-            joinColumns =
-            @JoinColumn(name = "utilization_ref", referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "client_limit_ref", referencedColumnName = "id")
 
-    )
 
-    @NonFinal
-    List<ClientLimit> clientLimitList = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "utilization_doc_ref", nullable = false)
+    List<UtilizationItem> utilizationItems = new ArrayList<>();
+
 }
