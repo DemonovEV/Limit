@@ -3,6 +3,7 @@ create schema if not exists "limits";
 --set currentSchema="limit";
 drop table if exists limit_to_utilization;
 drop table if exists utilization;
+drop table if EXISTS unfriendly_currencies;
 
 drop table if exists client_limits;
 
@@ -39,6 +40,13 @@ CREATE TABLE if not exists client_limits
 ------------------
 
 
+create table if not exists unfriendly_currencies
+(
+    value           varchar(3) not null   PRIMARY KEY
+);
+
+insert into unfriendly_currencies values ('USD'), ('EUR'), ('GPB'),('JPY');
+
 create table if not exists utilization
 (
     id                 SERIAL PRIMARY KEY,
@@ -47,7 +55,7 @@ create table if not exists utilization
     date_hold          TIMESTAMP  not null,
     date_proc          TIMESTAMP,
     doc_amount         numeric    not null,
-    currency           varchar(3) not null,
+    currency           varchar(3) not null   REFERENCES unfriendly_currencies (value),
     utilization_amount numeric    not null,
     income             boolean    not null,
     state              varchar    not null CHECK (state in ('HOLD', 'PROCESSED', 'CANCELED'))
@@ -63,6 +71,12 @@ create table if not exists limit_to_utilization
     utilization_ref   int     NOT NULL REFERENCES utilization (id),
     amount            numeric not null,
     utilization_order bigint  NOT NULL /* defaut taco_key*/
+);
+---------
+
+create table if not exists unfriendly_currencies
+(
+    value           varchar(3) not null   PRIMARY KEY
 );
 
 
