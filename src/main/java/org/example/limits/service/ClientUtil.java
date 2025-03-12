@@ -1,6 +1,7 @@
 package org.example.limits.service;
 
 import lombok.AllArgsConstructor;
+import org.example.limits.LimitsApplication;
 import org.example.limits.entity.Limit;
 import org.example.limits.repository.ClientLimitRepository;
 import org.example.limits.repository.CommonLimitRepository;
@@ -19,16 +20,10 @@ public class ClientUtil {
 
     String getClientType(String clientId) {
         //TODO
-        return "TEST_TYPE_1";
+        return LimitsApplication.CONST_FOR_TEST_TODO_DELETE;
     }
 
-    List<Limit> GetClientLimits(String clientId, LocalDateTime onDate) {
-        var limits = clientLimitRepository.findClientLimitsOnDate(clientId, onDate);
-
-        if (CollectionUtils.isEmpty(limits))
-            limits = new ArrayList<>();
-        else if (limits.stream().anyMatch(Limit::isCommonLimit))
-            return limits;
+    void extendWithCommonLimits(String clientId, List<Limit> limits, LocalDateTime onDate) {
 
         var commonLimits = commonLimitRepository.findClientTypeLimitsOnDate(
                 getClientType(clientId), onDate
@@ -46,7 +41,21 @@ public class ClientUtil {
                                             .build())
                             .toList()
             );
+            clientLimitRepository.saveAll(limits);
         }
+    }
+
+
+
+    public List<Limit> GetClientLimits(String clientId, LocalDateTime onDate) {
+        var limits = clientLimitRepository.findClientLimitsOnDate(clientId, onDate);
+
+        if (CollectionUtils.isEmpty(limits))
+            limits = new ArrayList<>();
+        else if (limits.stream().anyMatch(Limit::isCommonLimit))
+            return limits;
+
+        extendWithCommonLimits(clientId, limits, onDate);
 
         return limits;
     }

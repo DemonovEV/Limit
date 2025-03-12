@@ -9,6 +9,7 @@ import org.example.limits.repository.ClientLimitRepository;
 import org.example.limits.repository.CommonLimitRepository;
 import org.example.limits.repository.CurrencyRepository;
 import org.example.limits.repository.UtilizationRepository;
+import org.example.limits.service.ClientUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -19,10 +20,13 @@ import java.util.UUID;
 
 @SpringBootApplication
 public class LimitsApplication {
+    static public String CONST_FOR_TEST_TODO_DELETE="COMMON LIMIT 1";
+
     static CommonLimitRepository commonLimitRepository;
     static ClientLimitRepository clientLimitRepository;
     static UtilizationRepository utilizationRepository;
     static CurrencyRepository currencyRepository;
+    static ClientUtil clientUtil;
 
     static void Test1() {
         var data = new ArrayList<CommonLimit>();
@@ -51,7 +55,7 @@ public class LimitsApplication {
 
         // INIT COMMON LIMIT
         var commonLimit = CommonLimit.builder()
-                .clientType("COMMON LIMIT 1")
+                .clientType(CONST_FOR_TEST_TODO_DELETE)
                 .amount(1000)
                 .build();
         commonLimitRepository.save(commonLimit);
@@ -64,6 +68,7 @@ public class LimitsApplication {
                 .build();
 
         clientLimitRepository.save(clientPersonalLimit);
+/*
 
 // COPY COMMON LIMIT FOR CLIENT
         var clientCommonLimit = Limit.builder()
@@ -75,6 +80,10 @@ public class LimitsApplication {
                 .commonLimit(commonLimit)
                 .build();
         clientLimitRepository.save(clientCommonLimit);
+*/
+        clientUtil.GetClientLimits(clientPersonalLimit.getClientId(),LocalDateTime.now());
+        clientUtil.GetClientLimits(clientPersonalLimit.getClientId(),LocalDateTime.now());
+
 // Utilization 500
         var util1 =
                 UtilizationDoc.builder()
@@ -127,7 +136,6 @@ public class LimitsApplication {
         utilizationRepository.save(util2);
         clientLimitRepository.save(clientCommonLimit);
         clientLimitRepository.save(clientPersonalLimit);
-
     }
 
     public static void main(String[] args) {
@@ -137,6 +145,7 @@ public class LimitsApplication {
         commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
         utilizationRepository = ctx.getBean(UtilizationRepository.class);
         currencyRepository = ctx.getBean(CurrencyRepository.class);
+        clientUtil = ctx.getBean(ClientUtil.class);
 
         System.out.println("Вот такие валюты у нас есть : ");
         System.out.println(
