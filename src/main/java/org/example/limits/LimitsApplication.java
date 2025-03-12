@@ -1,16 +1,20 @@
 package org.example.limits;
 
-import org.example.limits.entity.Limit;
-import org.example.limits.entity.CommonLimit;
-import org.example.limits.entity.UtilizationItem;
-import org.example.limits.entity.UtilizationDoc;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import org.example.limits.entity.*;
 import org.example.limits.entity.enums.UtilizationState;
 import org.example.limits.repository.ClientLimitRepository;
 import org.example.limits.repository.CommonLimitRepository;
+import org.example.limits.repository.CurrencyRepository;
 import org.example.limits.repository.UtilizationRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,6 +28,13 @@ public class LimitsApplication {
         var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
         var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
         var utilizationRepository = ctx.getBean(UtilizationRepository.class);
+        var currencyRepository = ctx.getBean(CurrencyRepository.class);
+
+        System.out.println("Вот такие валюты у нас есть : ");
+        System.out.println(
+                currencyRepository.findAll()
+        );
+
 
         // INIT COMMON LIMIT
         var commonLimit = CommonLimit.builder()
@@ -103,6 +114,7 @@ public class LimitsApplication {
         utilizationRepository.save(util2);
         clientLimitRepository.save(clientCommonLimit);
         clientLimitRepository.save(clientPersonalLimit);
+
 
     }
 
