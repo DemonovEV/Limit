@@ -29,7 +29,7 @@ public class UtilizationDoc {
     @NonNull
     float utilization_amount;
     @NonNull
-   // @Builder.Default
+    // @Builder.Default
     float doc_amount;// = utilization_amount;
     @NonNull
     @Builder.Default
@@ -37,19 +37,17 @@ public class UtilizationDoc {
 
     @NonNull
     boolean income;
-    @NonFinal
-    LocalDateTime date_proc;
-
-    @NonFinal
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    UtilizationState state = UtilizationState.HOLD;
-
     @Builder.Default
 
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "utilization_doc_ref", nullable = false)
     List<UtilizationItem> utilizationItems = new ArrayList<>();
+    @NonFinal
+    LocalDateTime date_proc;
+    @NonFinal
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    UtilizationState state = UtilizationState.HOLD;
 
 }

@@ -14,7 +14,7 @@ public class UtilizationItem {
     Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "limit_ref",nullable = false)
+    @JoinColumn(name = "limit_ref", nullable = false)
     Limit limit;
     float amount;
 }

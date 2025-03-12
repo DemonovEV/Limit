@@ -1,10 +1,9 @@
 package org.example.limits;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
-import org.example.limits.entity.*;
+import org.example.limits.entity.CommonLimit;
+import org.example.limits.entity.Limit;
+import org.example.limits.entity.UtilizationDoc;
+import org.example.limits.entity.UtilizationItem;
 import org.example.limits.entity.enums.UtilizationState;
 import org.example.limits.repository.ClientLimitRepository;
 import org.example.limits.repository.CommonLimitRepository;
@@ -12,28 +11,42 @@ import org.example.limits.repository.CurrencyRepository;
 import org.example.limits.repository.UtilizationRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.domain.Specification;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @SpringBootApplication
 public class LimitsApplication {
+    static CommonLimitRepository commonLimitRepository;
+    static ClientLimitRepository clientLimitRepository;
+    static UtilizationRepository utilizationRepository;
+    static CurrencyRepository currencyRepository;
+
+    static void Test1() {
+        var data = new ArrayList<CommonLimit>();
+
+        var time = LocalDateTime.now()
+                .withDayOfMonth(1)
+                .truncatedTo(ChronoUnit.DAYS);
+        for (int j = 0; j < 10; j++) {
 
 
-    public static void main(String[] args) {
-        var ctx = SpringApplication.run(LimitsApplication.class, args);
+            for (int i = -10; i < 5; i++) {
+                data.add(
+                        CommonLimit.builder()
+                                .clientType("TEST " + Integer.toBinaryString(j))
+                                .amount(Math.abs(i * j) * 100)
+                                .dateBegin(time.plusMonths(i))
+                                .dateEnd(time.plusMonths(i + 1).minusSeconds(1))
+                                .build()
+                );
+            }
+        }
 
-        var clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
-        var commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
-        var utilizationRepository = ctx.getBean(UtilizationRepository.class);
-        var currencyRepository = ctx.getBean(CurrencyRepository.class);
-
-        System.out.println("Вот такие валюты у нас есть : ");
-        System.out.println(
-                currencyRepository.findAll()
-        );
+        commonLimitRepository.saveAll(data);
+//-------
 
 
         // INIT COMMON LIMIT
@@ -44,7 +57,7 @@ public class LimitsApplication {
         commonLimitRepository.save(commonLimit);
 // MAKE PERSONAL LIMIT FOR CLIENT
         var clientPersonalLimit = Limit.builder()
-                .clientId("ORG 1" )
+                .clientId("ORG 1")
                 .amount(3000)
                 .dateBegin(LocalDateTime.now())
                 .dateEnd(LocalDateTime.now().plusDays(100))
@@ -80,7 +93,7 @@ public class LimitsApplication {
                         .amount(util1.getUtilization_amount())
                         .build());
         // Корректирую USED
-        clientCommonLimit.setUsed(clientCommonLimit.getUsed()+util1.getUtilization_amount());
+        clientCommonLimit.setUsed(clientCommonLimit.getUsed() + util1.getUtilization_amount());
 
         utilizationRepository.save(util1);
         clientLimitRepository.save(clientCommonLimit);
@@ -102,18 +115,37 @@ public class LimitsApplication {
                         .limit(clientCommonLimit)
                         .amount(500)
                         .build());
-        clientCommonLimit.setUsed(clientCommonLimit.getUsed()+500);
+        clientCommonLimit.setUsed(clientCommonLimit.getUsed() + 500);
 
         util2.getUtilizationItems().add(
                 UtilizationItem.builder()
                         .limit(clientPersonalLimit)
                         .amount(300)
                         .build());
-        clientPersonalLimit.setUsed(clientPersonalLimit.getUsed()+ 300);
+        clientPersonalLimit.setUsed(clientPersonalLimit.getUsed() + 300);
 
         utilizationRepository.save(util2);
         clientLimitRepository.save(clientCommonLimit);
         clientLimitRepository.save(clientPersonalLimit);
+
+    }
+
+    public static void main(String[] args) {
+        var ctx = SpringApplication.run(LimitsApplication.class, args);
+
+        clientLimitRepository = ctx.getBean(ClientLimitRepository.class);
+        commonLimitRepository = ctx.getBean(CommonLimitRepository.class);
+        utilizationRepository = ctx.getBean(UtilizationRepository.class);
+        currencyRepository = ctx.getBean(CurrencyRepository.class);
+
+        System.out.println("Вот такие валюты у нас есть : ");
+        System.out.println(
+                currencyRepository.findAll()
+        );
+        Test1();
+        var s = commonLimitRepository.findClientTypeLimitsOnDate("Asd", LocalDateTime.now());
+
+        System.out.println(s.size());
 
 
     }

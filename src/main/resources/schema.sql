@@ -1,16 +1,15 @@
-
-drop schema if exists "limits" cascade ;
+drop schema if exists "limits" cascade;
 create schema if not exists "limits";
 
 
 --set currentSchema="limit";
-drop table if exists utilization_items CASCADE ;
+drop table if exists utilization_items CASCADE;
 drop table if exists utilization_doc CASCADE;
 drop table if EXISTS unfriendly_currencies CASCADE;
 drop table if exists client_limits CASCADE;
 drop table if exists common_limits CASCADE;
 
-drop sequence if exists common_limits_id_seq CASCADE ;
+drop sequence if exists common_limits_id_seq CASCADE;
 drop sequence if exists client_limits_id_seq CASCADE;
 drop sequence if exists utilization_doc_id_seq CASCADE;
 drop sequence if exists utilization_items_id_seq CASCADE;

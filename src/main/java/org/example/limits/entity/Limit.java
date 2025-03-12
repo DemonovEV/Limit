@@ -26,24 +26,23 @@ public class Limit {
     @Builder.Default
     @NonNull
     LocalDateTime dateBegin = LocalDateTime.now();
-
-    @NonFinal
-    LocalDateTime dateEnd;
-
     @NonNull
     float amount;
-
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "common_limit_ref", referencedColumnName = "id")
+    final CommonLimit commonLimit;
+    @NonFinal
+    LocalDateTime dateEnd;
     @Builder.Default
     @NonNull
     @NonFinal
     float used = 0;
-
     @Builder.Default
     @NonNull
     @NonFinal
     float hold = 0;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "common_limit_ref", referencedColumnName = "id")
-    final CommonLimit commonLimit;
+    public boolean isCommonLimit() {
+        return commonLimit != null;
+    }
 }

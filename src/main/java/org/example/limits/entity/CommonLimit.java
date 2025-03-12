@@ -27,10 +27,8 @@ public class CommonLimit {
     @Builder.Default
     @NonNull
     LocalDateTime dateBegin = LocalDateTime.now();
-
-    @NonFinal
-    LocalDateTime dateEnd;
-
     @NonNull
     float amount;
+    @NonFinal
+    LocalDateTime dateEnd;
 }
